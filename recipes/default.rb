@@ -64,7 +64,7 @@ unless FileTest.exists?(node['jira']['install_path'])
   end
 end
 
-directory "#{node['jira']['install_path']}" do
+directory node['jira']['install_path'] do
   recursive true
   owner "www-data"
 end
