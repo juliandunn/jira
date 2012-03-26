@@ -34,10 +34,10 @@ include_recipe "apache2::mod_proxy"
 include_recipe "apache2::mod_proxy_http"
 include_recipe "apache2::mod_ssl"
 
-unless FileTest.exists?(node[:jira][:install_path])
+unless FileTest.exists?(node['jira']['install_path'])
   remote_file "jira" do
     path "/tmp/jira.tar.gz"
-    source "http://www.atlassian.com/software/jira/downloads/binary/atlassian-jira-#{node[:jira][:version]}-standalone.tar.gz"
+    source "http://www.atlassian.com/software/jira/downloads/binary/atlassian-jira-#{node['jira']['version']}-standalone.tar.gz"
   end
   
   bash "untar-jira" do
@@ -45,10 +45,10 @@ unless FileTest.exists?(node[:jira][:install_path])
   end
   
   bash "install-jira" do
-    code "mv /tmp/atlassian-jira-#{node[:jira][:version]}-standalone #{node[:jira][:install_path]}"
+    code "mv /tmp/atlassian-jira-#{node['jira']['version']}-standalone #{node['jira']['install_path']}"
   end
   
-  if node[:jira][:database] == "mysql"
+  if node['jira']['database'] == "mysql"
     remote_file "mysql-connector" do
       path "/tmp/mysql-connector.tar.gz"
       source "http://downloads.mysql.com/archives/mysql-connector-java-5.1/mysql-connector-java-5.1.6.tar.gz"
@@ -59,39 +59,39 @@ unless FileTest.exists?(node[:jira][:install_path])
     end
   
     bash "install-mysql-connector" do
-      code "cp /tmp/mysql-connector-java-5.1.6/mysql-connector-java-5.1.6-bin.jar #{node[:jira][:install_path]}/common/lib"
+      code "cp /tmp/mysql-connector-java-5.1.6/mysql-connector-java-5.1.6-bin.jar #{node['jira']['install_path']}/common/lib"
     end
   end
 end
 
-directory "#{node[:jira][:install_path]}" do
+directory "#{node['jira']['install_path']}" do
   recursive true
   owner "www-data"
 end
 
-cookbook_file "#{node[:jira][:install_path]}/bin/startup.sh" do
+cookbook_file "#{node['jira']['install_path']}/bin/startup.sh" do
   source "startup.sh"
   mode 0755
 end
   
-cookbook_file "#{node[:jira][:install_path]}/bin/catalina.sh" do
+cookbook_file "#{node['jira']['install_path']}/bin/catalina.sh" do
   source "catalina.sh"
   mode 0755
 end
 
-template "#{node[:jira][:install_path]}/conf/server.xml" do
+template "#{node['jira']['install_path']}/conf/server.xml" do
   source "server.xml.erb"
   mode 0755
 end
   
-template "#{node[:jira][:install_path]}/atlassian-jira/WEB-INF/classes/entityengine.xml" do
+template "#{node['jira']['install_path']}/atlassian-jira/WEB-INF/classes/entityengine.xml" do
   source "entityengine.xml.erb"
   mode 0755
 end
 
 runit_service "jira"
 
-template "#{node[:apache][:dir]}/sites-available/jira.conf" do
+template "#{node['apache']['dir']}/sites-available/jira.conf" do
   source "apache.conf.erb"
   mode 0644
 end
