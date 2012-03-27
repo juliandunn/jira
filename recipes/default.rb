@@ -36,30 +36,30 @@ include_recipe "apache2::mod_ssl"
 
 unless FileTest.exists?(node['jira']['install_path'])
   remote_file "jira" do
-    path "/tmp/jira.tar.gz"
+    path "#{Chef::Config[:file_cache_path]}/jira.tar.gz"
     source "http://www.atlassian.com/software/jira/downloads/binary/atlassian-jira-#{node['jira']['version']}-standalone.tar.gz"
   end
   
   bash "untar-jira" do
-    code "(cd /tmp; tar zxvf /tmp/jira.tar.gz)"
+    code "(cd #{Chef::Config[:file_cache_path]}; tar zxvf #{Chef::Config[:file_cache_path]}/jira.tar.gz)"
   end
   
   bash "install-jira" do
-    code "mv /tmp/atlassian-jira-#{node['jira']['version']}-standalone #{node['jira']['install_path']}"
+    code "mv #{Chef::Config[:file_cache_path]}/atlassian-jira-#{node['jira']['version']}-standalone #{node['jira']['install_path']}"
   end
   
   if node['jira']['database'] == "mysql"
     remote_file "mysql-connector" do
-      path "/tmp/mysql-connector.tar.gz"
+      path "#{Chef::Config[:file_cache_path]}/mysql-connector.tar.gz"
       source "http://downloads.mysql.com/archives/mysql-connector-java-5.1/mysql-connector-java-5.1.6.tar.gz"
     end
   
     bash "untar-mysql-connector" do
-      code "(cd /tmp; tar zxvf /tmp/mysql-connector.tar.gz)"
+      code "(cd #{Chef::Config[:file_cache_path]}; tar zxvf #{Chef::Config[:file_cache_path]}/mysql-connector.tar.gz)"
     end
   
     bash "install-mysql-connector" do
-      code "cp /tmp/mysql-connector-java-5.1.6/mysql-connector-java-5.1.6-bin.jar #{node['jira']['install_path']}/common/lib"
+      code "cp #{Chef::Config[:file_cache_path]}/mysql-connector-java-5.1.6/mysql-connector-java-5.1.6-bin.jar #{node['jira']['install_path']}/common/lib"
     end
   end
 end
