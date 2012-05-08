@@ -32,8 +32,8 @@ See `attributes/default.rb` for defaults.
   the virtual host.
 * `node['jira']['version']` - version of jira to install
 * `node['jira']['install_path']` - location where jira should be installed
-* `node[:jira']['run_user']` - user to run the jira service as
-* `node[:jira][:home]` - required to run Jira
+* `node['jira']['run_user']` - user to run the jira service as
+* `node['jira']['home']` - required to run Jira
 
 Recipes
 =======
