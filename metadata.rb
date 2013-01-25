@@ -12,9 +12,11 @@ recipe "jira", "Installs and configures Jira"
   supports os
 end
 
-%w{ runit java apache2 }.each do |cb|
+%w{ java apache2 }.each do |cb|
   depends cb
 end
+
+depends "runit", "<= 0.16.2"
 
 attribute "jira",
   :display_name => "Jira",
