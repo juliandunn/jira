@@ -1,6 +1,3 @@
-site :opscode
-group :integration do
-  cookbook "minitest-handler"
-end
+chef_api :config
 
 metadata
