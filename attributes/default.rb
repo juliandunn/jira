@@ -18,7 +18,7 @@
 # limitations under the License.
 #
 
-default['jira']['version']='6.0.5'
+default['jira']['version']='6.2.7'
 default['jira']['parentdir']='/opt'
 
 # This is what the JIRA Installation docs refer to as the "JIRA Installation Directory"
