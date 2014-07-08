@@ -2,7 +2,7 @@
 # Cookbook Name:: jira
 # Recipe:: default
 #
-# Copyright 2008-2009, Opscode, Inc.
+# Copyright 2012, SecondMarket Labs, LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,85 +17,3 @@
 # limitations under the License.
 #
 
-#
-# Manual Steps!
-#
-# MySQL:
-#
-#   create database jiradb character set utf8;
-#   grant all privileges on jiradb.* to '$jira_user'@'localhost' identified by '$jira_password';
-#   flush privileges;
-
-include_recipe "runit"
-include_recipe "java"
-include_recipe "apache2"
-include_recipe "apache2::mod_rewrite"
-include_recipe "apache2::mod_proxy"
-include_recipe "apache2::mod_proxy_http"
-include_recipe "apache2::mod_ssl"
-
-unless FileTest.exists?(node['jira']['install_path'])
-  remote_file "jira" do
-    path "#{Chef::Config[:file_cache_path]}/jira.tar.gz"
-    source "http://www.atlassian.com/software/jira/downloads/binary/atlassian-jira-#{node['jira']['version']}-standalone.tar.gz"
-  end
-  
-  execute "untar-jira" do
-    cwd Chef::Config[:file_cache_path]
-    command "tar zxvf jira.tar.gz"
-  end
-  
-  execute "install-jira" do
-    command "mv #{Chef::Config[:file_cache_path]}/atlassian-jira-#{node['jira']['version']}-standalone #{node['jira']['install_path']}"
-  end
-  
-  if node['jira']['database'] == "mysql"
-    remote_file "mysql-connector" do
-      path "#{Chef::Config[:file_cache_path]}/mysql-connector.tar.gz"
-      source "http://downloads.mysql.com/archives/mysql-connector-java-5.1/mysql-connector-java-5.1.6.tar.gz"
-    end
-  
-    execute "untar-mysql-connector" do
-      cwd Chef::Config[:file_cache_path]
-      command "tar zxvf mysql-connector.tar.gz"
-    end
-  
-    execute "install-mysql-connector" do
-      command "cp #{Chef::Config[:file_cache_path]}/mysql-connector-java-5.1.6/mysql-connector-java-5.1.6-bin.jar #{node['jira']['install_path']}/common/lib"
-    end
-  end
-end
-
-directory node['jira']['install_path'] do
-  recursive true
-  owner "www-data"
-end
-
-cookbook_file "#{node['jira']['install_path']}/bin/startup.sh" do
-  source "startup.sh"
-  mode 0755
-end
-  
-cookbook_file "#{node['jira']['install_path']}/bin/catalina.sh" do
-  source "catalina.sh"
-  mode 0755
-end
-
-template "#{node['jira']['install_path']}/conf/server.xml" do
-  source "server.xml.erb"
-  mode 0755
-end
-  
-template "#{node['jira']['install_path']}/atlassian-jira/WEB-INF/classes/entityengine.xml" do
-  source "entityengine.xml.erb"
-  mode 0755
-end
-
-runit_service "jira"
-
-template "#{node['apache']['dir']}/sites-available/jira.conf" do
-  source "apache.conf.erb"
-  mode 0644
-end
-
-apache_site "jira.conf"

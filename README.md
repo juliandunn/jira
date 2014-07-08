@@ -1,75 +1,75 @@
 Description
 ===========
 
-Installs and configures Jira and starts it as a service under runit.
+Installs [Atlassian JIRA](https://www.atlassian.com/software/jira/overview), a popular project-management and ticketing system for software project teams.
 
 Requirements
 ============
 
-## Platform:
+## Platforms
 
-* Ubuntu 10.04
-* Debian 6.0
+* CentOS 6/RHEL6
 
-Requires a MySQL database server, but currently out of scope to run
-this on the same system, or even automatically set it up (see
-__Roadmap__ and __Usage__).
+This cookbook might work on CentOS 5, but [JIRA no longer supports PostgreSQL 8.1](https://confluence.atlassian.com/display/JIRAKB/2012/07/23/Advance+warning+-+end+of+support+for+PostgreSQL+8.2+with+JIRA+5.2) so you would need to use PostgreSQL 8.4 or host the database on another server.
 
-## Cookbooks:
+## Cookbooks
 
-* runit
-* java
-* apache2
+* database
+* postgresql
 
 Attributes
 ==========
 
-See `attributes/default.rb` for defaults.
+This cookbook assumes that you'll install JIRA into /opt, but this is configurable.
 
-* `node['jira']['virtual_host_name']` - hostname to use in the virtualhost
-* `node['jira']['virtual_host_alias']` - server alias(es) to use in
-  the virtual host.
-* `node['jira']['version']` - version of jira to install
-* `node['jira']['install_path']` - location where jira should be installed
-* `node['jira']['run_user']` - user to run the jira service as
-* `node['jira']['database']` - the name of the database to connect to
-* `node['jira']['database_host']` - hostname of the database server
-* `node['jira']['database_user']` - user to connect to the database
-* `node['jira']['database_password']` - password to use for the
-  database connection.
+Other common user-serviceable parts:
+
+* `node['jira']['homedir']` - Atlassian's documentation calls this the "home directory", but this is really where JIRA will store its working files.
+
+If integrating with Crowd, the following attributes can be set:
+
+* `node['jira']['crowd_sso']['sso_appname']` - the "app name" in Crowd
+* `node['jira']['crowd_sso']['sso_password']` - the "app password" to authenticate against Crowd with
+* `node['jira']['crowd_sso']['crowd_base_url']` - the Crowd base URL
 
 Recipes
 =======
 
-default
--------
+## default
 
-The default recipe sets up runit, java and apache2 first, then
-downloads jira-standalone from atlassian of the specified version. It
-also downloads and installs the mysql connector.
+Does nothing.
 
-After writing the configuration and startup.sh script, jira will start
-under runit, and an apache vhost will be set up for it.
+## server
 
-Usage
-=====
+Unpack Atlassian JIRA from the tarball and perform basic configuration allowing you to set it up.
 
-Until COOK-464 is released, the following manual steps are required to
-set up the database.
+## local_database
 
-Mysql queries:
+Sets up a local PostgreSQL database for JIRA to talk to.
 
-    create database jiradb character set utf8;
-    grant all privileges on jiradb.*
-        to '$jira_user'@'localhost' identified by '$jira_password';
-    flush privileges;
+## crowd_sso
+
+Does some basic configuration of JIRA for integration with Atlassian Crowd for single-sign-on/directory integration.
+
+Limitations
+===========
+
+* It's obviously impossible to Chef out the entire JIRA install because much of it is interactive. This cookbook deals with getting JIRA onto the system and the database set up, not configuring the actual app itself.
+* Various XML files in JIRA need to be edited to make things like SSL termination at a front-end apache work. These can't be managed by Chef: in particular, modifying the "proxyHost", "proxyPort" and "proxyserver" attributes of server.xml
+* Single-sign-on configuration with Crowd is not managed by this cookbook either since it also involves editing XML files.
+
+Roadmap
+=======
+
+* Support other databases other than PostgreSQL.
+* Support databases on machines other than "localhost".
+* Support platforms other than RHEL.
+* Find a way to manage needed directives in JIRA's XML configs.
 
 License and Author
 ==================
 
-Author:: Adam Jacob <adam@opscode.com>
-
-Copyright:: 2008-2011, Opscode, Inc
+- Author:: Julian C. Dunn <jdunn@opscode.com>
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
