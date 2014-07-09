@@ -1,6 +1,2 @@
-site :opscode
-group :integration do
-  cookbook "minitest-handler"
-end
-
+source 'https://api.berkshelf.com'
 metadata
