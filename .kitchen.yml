@@ -2,7 +2,7 @@ driver:
   name: vagrant
   customize:
     cpus: 2
-    memory: 1024
+    memory: 4096
   network:
     # Allow access to the JIRA webui which is useful when troubleshooting
     - - forwarded_port
