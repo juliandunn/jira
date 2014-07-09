@@ -100,5 +100,4 @@ end
 service 'jira' do
   supports :restart => true
   action [:enable, :start]
-  returns [0,1]  # silly Jira, sometimes you return 1 even when successfully starting
 end
