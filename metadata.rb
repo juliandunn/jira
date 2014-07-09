@@ -7,7 +7,7 @@ long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version '1.0.1'
 
 %w(database java mysql openssl postgresql).each do |d|
-  depends d
+  depends d, '>= 0.0.0'
 end
 
 %w(redhat centos scientific oracle amazon).each do |os|
