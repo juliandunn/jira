@@ -52,9 +52,9 @@ end
 
 template "#{node['jira']['homedir']}/dbconfig.xml" do
   source 'dbconfig.xml.erb'
-  owner 'root'
-  group 'root'
-  mode 00644
+  owner 'jira'
+  group 'jira'
+  mode 00600
   variables(
     :db_server => 'localhost',
     :db_name   => 'jira',
