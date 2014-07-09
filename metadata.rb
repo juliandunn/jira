@@ -11,5 +11,5 @@ version '1.0.1'
 end
 
 %w(redhat centos scientific oracle amazon).each do |os|
-  supports os
+  supports os, '>= 0.0.0'
 end
