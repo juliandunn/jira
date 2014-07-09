@@ -19,15 +19,15 @@
 
 ::Chef::Recipe.send(:include, Opscode::OpenSSL::Password)
 
-include_recipe "postgresql::server"
-include_recipe "database::postgresql"
+include_recipe 'postgresql::server'
+include_recipe 'database::postgresql'
 
 # randomly generate Jira MySQL password
 node.set_unless['jira']['local_database']['password'] = secure_password
 node.save unless Chef::Config['solo']
 
 # Assume we're running the crowd server locally
-postgresql_connection_info = {:host => "localhost", :username => "postgres", :password => node['postgresql']['password']['postgres']}
+postgresql_connection_info = { :host => 'localhost', :username => 'postgres', :password => node['postgresql']['password']['postgres'] }
 
 postgresql_database_user 'jira' do
   connection postgresql_connection_info
@@ -51,9 +51,9 @@ postgresql_database_user 'jira' do
 end
 
 template "#{node['jira']['homedir']}/dbconfig.xml" do
-  source "dbconfig.xml.erb"
-  owner "root"
-  group "root"
+  source 'dbconfig.xml.erb'
+  owner 'root'
+  group 'root'
   mode 00644
   variables(
     :db_server => 'localhost',
@@ -62,5 +62,5 @@ template "#{node['jira']['homedir']}/dbconfig.xml" do
     :db_password => node['jira']['local_database']['password']
   )
   action :create
-  notifies :restart, "service[jira]"
+  notifies :restart, 'service[jira]'
 end

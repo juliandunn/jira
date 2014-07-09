@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: jira
-# Attributes:: default 
+# Attributes:: default
 #
 # Copyright 2012, SecondMarket Labs, LLC.
 # Copyright 2013, Opscode, Inc.
@@ -18,17 +18,17 @@
 # limitations under the License.
 #
 
-default['jira']['version']='6.2.7'
-default['jira']['parentdir']='/opt'
+default['jira']['version'] = '6.2.7'
+default['jira']['parentdir'] = '/opt'
 
 # This is what the JIRA Installation docs refer to as the "JIRA Installation Directory"
-default['jira']['installdir']="#{node['jira']['parentdir']}/atlassian-jira-#{node['jira']['version']}-standalone"
-default['jira']['tarball']="atlassian-jira-#{node['jira']['version']}.tar.gz"
-default['jira']['url']="http://www.atlassian.com/software/jira/downloads/binary/#{node['jira']['tarball']}"
+default['jira']['installdir'] = "#{node['jira']['parentdir']}/atlassian-jira-#{node['jira']['version']}-standalone"
+default['jira']['tarball'] = "atlassian-jira-#{node['jira']['version']}.tar.gz"
+default['jira']['url'] = "http://www.atlassian.com/software/jira/downloads/binary/#{node['jira']['tarball']}"
 
 # This is what the JIRA Installation docs refer to as the "JIRA Home Directory"
-default['jira']['homedir']='/var/jira-home'
+default['jira']['homedir'] = '/var/jira-home'
 
-default['jira']['crowd_sso']['sso_appname']='jira'
-default['jira']['crowd_sso']['sso_password']='jira'
-default['jira']['crowd_sso']['crowd_base_url']='http://localhost:8095/crowd/'
+default['jira']['crowd_sso']['sso_appname'] = 'jira'
+default['jira']['crowd_sso']['sso_password'] = 'jira'
+default['jira']['crowd_sso']['crowd_base_url'] = 'http://localhost:8095/crowd/'
