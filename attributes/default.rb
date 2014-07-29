@@ -21,7 +21,7 @@
 # We need Java 7 for JIRA
 default['java']['jdk_version'] = '7'
 
-default['jira']['version'] = '6.2.7'
+default['jira']['version'] = '6.3.1'
 default['jira']['parentdir'] = '/opt'
 
 # This is what the JIRA Installation docs refer to as the "JIRA Installation Directory"
