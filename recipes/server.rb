@@ -98,6 +98,6 @@ template '/etc/init.d/jira' do
 end
 
 service 'jira' do
-  supports :restart => true
+  supports :status => false
   action [:enable, :start]
 end
