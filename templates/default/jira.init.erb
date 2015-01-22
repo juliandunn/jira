@@ -1,4 +1,4 @@
-#!/bin/sh -e
+#!/bin/sh
 # JIRA startup script
 #chkconfig: 2345 80 05
 #description: JIRA
@@ -12,6 +12,20 @@ USER=jira
 BASE=<%= @jira_base %>
 # Location of Java JDK
 #export JAVA_HOME=/usr/lib/jvm/java-6-sun
+# Location of Catalina PID
+PIDFILE=$BASE/work/catalina.pid
+
+. /etc/rc.d/init.d/functions
+
+rh_status() {
+    # run checks to determine if the service is running or use generic status
+    echo $PIDFILE
+    status -p $PIDFILE java
+}
+
+rh_status_q() {
+    rh_status >/dev/null 2>&1
+}
  
 case "$1" in
   start)
@@ -29,8 +43,11 @@ case "$1" in
     sleep 5
     $0 start
     ;;
+  status)
+    rh_status
+    ;;
   *)
-    echo "Usage: /etc/init.d/$APP {start|restart|stop}"
+    echo "Usage: /etc/init.d/$APP {start|restart|stop|status}"
     exit 1
     ;;
 esac
