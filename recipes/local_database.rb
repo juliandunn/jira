@@ -17,7 +17,7 @@
 # limitations under the License.
 #
 
-::Chef::Recipe.send(:include, Chef::OpenSSL::Password)
+::Chef::Recipe.send(:include, OpenSSLCookbook::Password)
 
 include_recipe 'postgresql::server'
 include_recipe 'database::postgresql'
