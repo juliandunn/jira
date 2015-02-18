@@ -69,7 +69,7 @@ Roadmap
 License and Author
 ==================
 
-- Author:: Julian C. Dunn <jdunn@opscode.com>
+- Author:: Julian C. Dunn <jdunn@chef.io>
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
