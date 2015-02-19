@@ -1,6 +1,10 @@
 jira cookbook changelog
 -----------------------
 
+v1.0.4
+------
+- reverting OpenSSL module namespace change
+
 v1.0.3
 ------
 - updating to work with latest openssl cookbook
