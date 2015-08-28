@@ -86,18 +86,39 @@ template "#{node['jira']['installdir']}/atlassian-jira/WEB-INF/classes/jira-appl
   notifies :restart, 'service[jira]'
 end
 
-template '/etc/init.d/jira' do
-  source 'jira.init.erb'
-  owner 'root'
-  group 'root'
-  mode 00755
-  variables(
-    :jira_base => node['jira']['installdir']
-  )
-  action :create
+if node['init_package'] == 'systemd'
+  execute 'systemctl-daemon-reload' do
+    command '/bin/systemctl --system daemon-reload'
+    action :nothing
+  end
+
+  template '/etc/systemd/system/jira.service' do
+    source 'jira.systemd.erb'
+    owner 'root'
+    group 'root'
+    mode 00755
+    variables(
+      :jira_base => node['jira']['installdir'],
+      :user => node['jira']['user']
+      )
+    action :create
+    notifies :run, 'execute[systemctl-daemon-reload]', :immediately
+  end
+else
+  template '/etc/init.d/jira' do
+    source 'jira.init.erb'
+    owner 'root'
+    group 'root'
+    mode 00755
+    variables(
+      :jira_base => node['jira']['installdir'],
+      :user => node['jira']['user']
+      )
+    action :create
+  end
 end
 
 service 'jira' do
-  supports :status => false
+  supports :status => true, :restart => true
   action [:enable, :start]
 end
