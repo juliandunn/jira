@@ -27,5 +27,4 @@ platforms:
 suites:
   - name: default
     run_list:
-      - recipe[jira::server]
-      - recipe[jira::local_database]
+      - recipe[jira_test::default]
