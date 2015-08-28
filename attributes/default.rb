@@ -18,6 +18,8 @@
 # limitations under the License.
 #
 
+default['jira']['user'] = 'jira'
+
 # We need Java 7 for JIRA
 default['java']['jdk_version'] = '7'
 
