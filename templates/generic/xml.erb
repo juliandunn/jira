@@ -1,0 +1,14 @@
+<% require 'builder'                                           %>
+<% def build_xml(h, x)                                         %>
+<%   h.each do |k, v|                                          %>
+<%     if v.is_a?(Hash)                                        %>
+<%       x.__send__(k) { build_xml(v, x) }                     %>
+<%     else                                                    %>
+<%       x.__send__(k, v)                                      %>
+<%     end                                                     %>
+<%   end                                                       %>
+<% end                                                         %>
+<% xml = Builder::XmlMarkup.new(indent: 2)                     %>
+<% out = xml.instruct! :xml, version: '1.0', encoding: 'UTF-8' %>
+<% build_xml(@hash, xml)                                       %>
+<%= out %>

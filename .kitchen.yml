@@ -1,24 +1,19 @@
+---
 driver:
   name: vagrant
   customize:
     cpus: 2
     memory: 4096
   network:
-    # Allow access to the JIRA webui which is useful when troubleshooting
-    - - forwarded_port
-      - guest: 8080
-        host: 8080
-        auto_correct: true
+    - ['forwarded_port', {guest: 8080, host: 8080, auto_correct: true}] # expose jira
 
 provisioner:
   name: chef_zero
-  require_chef_omnibus: 11.12.8
 
 platforms:
-  - name: centos-6.5
+  - name: centos-6.7
 
 suites:
   - name: default
     run_list:
-      - recipe[jira::server]
-      - recipe[jira::local_database]
+      - recipe[jira]

@@ -1,6 +1,13 @@
 jira cookbook changelog
 -----------------------
 
+v2.0.0
+------
+- generate JIRA installation options
+- generate generic dbconfig.xml
+- enable remote JAR libraries retrieval
+- remove all dependencies
+
 v1.0.4
 ------
 - reverting OpenSSL module namespace change
