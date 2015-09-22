@@ -2,7 +2,7 @@ language: ruby
 bundler_args: "--without kitchen_vagrant"
 rvm:
 - 2.1.5
-- 2.2.0
+- 2.2
 before_install:
 - echo -n $DO_KEY_CHUNK_{0..30} >> ~/.ssh/id_do.base64
 - cat ~/.ssh/id_do.base64 | tr -d ' ' | base64 --decode > ~/.ssh/id_do.pem
@@ -45,6 +45,7 @@ env:
   - secure: b2O7pD700rFWWk4xruQgJ/GB8T+3zrt7+yN0uyLsYPRYBwSmBOsSApKgDVKdb0uy5PGDib/Tgd1dkzrNa3fA+j1juyD/3Gueo4DgZxoD48Q/VZqtcdNXDxPuGPBS0NFwtmU1h4e2z7jJiMpWswrIaQhCRChvi2mGs2GjPKj2gik=
   - secure: Dm8ObCzjfLhbUknhkr0IxqBhVzKlgvMsLKCLv6KdbkkNmcyU/Fi+cuejrgaUjIxuuXE9ihHdDgCvTfnLNYdsJFrr73tU7XeoYk6/hiwUZ5ebPtnEQmbjQWkdXVJ9llQy+DV1Ph5k9KEVZLrlaMW4SxyL3XYt4lJoX1cbGhRxp6o=
   - secure: pHyMeMKfOCqYkz3x04lLwmrWnRjDejOcA8I0aaoUean+capdgJOK/qV7D1ZftYlAO4rBFp74xNYCIzudLfmjuLgqp9UUB+52PhQcJltJCJ+nKmoqDcQibjXiMyzvWalgr/fpMU6jVKAZ2z2N1JD95+A472Kuner3gY6NFav36/M=
+  - secure: JusmGZ+B4mvbybxHxxoVIrKrhlKXMUtzM0J6rzbFmUTmfzV7DyTREp+1cXdXURYMrhqWtDFnl4RIIzlv44ooSH0HsiMLqymUSF0812i7KgY5axMTSHh50GL1sXo49aOoPUxsBPCzdwMFYtvkMH7mEHG7PIcbSGFx1Y6ztVQnS5w=
   matrix:
   - KITCHEN_INSTANCE='default-centos-65'
   - KITCHEN_INSTANCE='default-centos-70'
