@@ -1,5 +1,6 @@
 language: ruby
 bundler_args: "--without kitchen_vagrant"
+sudo: false
 rvm:
 - 2.1.5
 - 2.2
