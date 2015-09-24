@@ -12,13 +12,19 @@ driver:
 
 provisioner:
   name: chef_zero
-  require_chef_omnibus: 11.12.8
 
 platforms:
-  - name: centos-6.5
+  - name: centos-6.6
+  - name: centos-7.0
+  - name: ubuntu-14.04
+  - name: ubuntu-15.04
+    attributes:
+      postgresql:
+        # postgresql cookbook doesn't support 15.04 yet.
+        version: '9.4'
+        enable_pgdg_apt: false
 
 suites:
   - name: default
     run_list:
-      - recipe[jira::server]
-      - recipe[jira::local_database]
+      - recipe[jira_test::default]
