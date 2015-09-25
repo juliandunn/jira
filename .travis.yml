@@ -50,3 +50,4 @@ env:
   matrix:
   - KITCHEN_INSTANCE='default-centos-65'
   - KITCHEN_INSTANCE='default-centos-70'
+  - KITCHEN_INSTANCE='default-ubuntu-1404'
