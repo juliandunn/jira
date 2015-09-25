@@ -4,7 +4,7 @@ After=network.target
 
 [Service]
 Type=forking
-User=jira
+User=<%= @user %>
 PIDFile=<%= @jira_base %>/work/catalina.pid
 ExecStart=<%= @jira_base %>/bin/start-jira.sh
 ExecStop=<%= @jira_base %>/bin/stop-jira.sh

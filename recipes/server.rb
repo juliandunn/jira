@@ -38,7 +38,7 @@ http_request "HEAD #{node['jira']['url']}" do
   if File.exist?("#{Chef::Config[:file_cache_path]}/#{node['jira']['tarball']}")
     headers 'If-Modified-Since' => File.mtime("#{Chef::Config[:file_cache_path]}/#{node['jira']['tarball']}").httpdate
   end
-  notifies :create, resources(:remote_file => "#{Chef::Config[:file_cache_path]}/#{node['jira']['tarball']}"), :immediately
+  notifies :create, "remote_file[#{Chef::Config[:file_cache_path]}/#{node['jira']['tarball']}]", :immediately
 end
 
 user 'jira' do
