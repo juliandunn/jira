@@ -26,8 +26,18 @@ platforms:
     ssh_key_ids: <%= ENV['DIGITAL_OCEAN_SSH_KEY_IDS'] %>
     ssh_key: <%= ENV['DIGITAL_OCEAN_SSH_KEY_PATH'] %>
 
+- name: ubuntu-14.04
+  driver_plugin: digitalocean
+  driver_config:
+    size: 8gb
+    image: ubuntu-14-04-x64
+    region: <%= ENV['DIGITALOCEAN_REGION'] %>
+    ssh_key_ids: <%= ENV['DIGITALOCEAN_SSH_KEYS'] %>
+    ssh_key: <%= ENV['DIGITALOCEAN_SSH_KEY_PATH'] %>
+  run_list:
+  - recipe[apt]
+
 suites:
 - name: default
   run_list:
-    - recipe[jira::server]
-    - recipe[jira::local_database]
+  - recipe[jira_test::default]
