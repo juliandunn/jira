@@ -100,7 +100,7 @@ if node['init_package'] == 'systemd'
     variables(
       :jira_base => node['jira']['installdir'],
       :user => node['jira']['user']
-      )
+    )
     action :create
     notifies :run, 'execute[systemctl-daemon-reload]', :immediately
   end
@@ -113,7 +113,7 @@ else
     variables(
       :jira_base => node['jira']['installdir'],
       :user => node['jira']['user']
-      )
+    )
     action :create
   end
 end
