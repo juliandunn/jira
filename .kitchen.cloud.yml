@@ -36,6 +36,9 @@ platforms:
     ssh_key: <%= ENV['DIGITAL_OCEAN_SSH_KEY_PATH'] %>
   run_list:
   - recipe[apt]
+  attributes:
+    apt:
+      compile_time_update: true
 
 suites:
 - name: default

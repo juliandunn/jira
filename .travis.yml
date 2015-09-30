@@ -2,7 +2,6 @@ language: ruby
 bundler_args: "--without kitchen_vagrant"
 sudo: false
 rvm:
-- 2.1.5
 - 2.2
 before_install:
 - echo -n $DO_KEY_CHUNK_{0..30} >> ~/.ssh/id_do.base64
