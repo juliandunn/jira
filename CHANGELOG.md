@@ -1,6 +1,10 @@
 jira cookbook changelog
 -----------------------
 
+vX.Y.Z
+------
+- removed unnecessary cookbook version constraints
+
 v1.0.4
 ------
 - reverting OpenSSL module namespace change

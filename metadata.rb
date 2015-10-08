@@ -9,8 +9,8 @@ version '1.0.4'
 depends 'database'
 depends 'iptables'
 depends 'java'
-depends 'openssl', '~> 4.0.0'
-depends 'postgresql', '~> 3.4.20'
+depends 'openssl'
+depends 'postgresql'
 
 %w(redhat centos scientific oracle amazon debian ubuntu).each do |os|
   supports os
