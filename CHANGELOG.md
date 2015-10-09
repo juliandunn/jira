@@ -1,8 +1,9 @@
 jira cookbook changelog
 -----------------------
 
-vX.Y.Z
-------
+Unreleased
+----------
+- use systemd startup scripts where possible
 - removed unnecessary cookbook version constraints
 
 v1.0.4
