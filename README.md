@@ -1,3 +1,8 @@
+DEPRECATED
+==========
+
+There is a much better JIRA cookbook on the [Chef Supermarket](https://supermarket.chef.io/cookbooks/jira). This code is no longer maintained.
+
 Description
 ===========
 
